@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Person Prompt Generator</title>
+<link rel="stylesheet" href="style.css">
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous" />
+</head>
+<body>
+<div class="container">
+  <h1>Person AI</h1>
+  <p>Select a personality to generate a role-play prompt.</p>
+
+  <div class="avatar-grid" id="avatarGrid">
+    <!-- Avatars will be dynamically inserted here -->
+  </div>
+</div>
+
+<!-- Popup -->
+<div class="popup-overlay" id="popupOverlay">
+  <div class="popup">
+    <img id="popupImg" src="" alt="Character Image">
+    <h3 id="popupTitle"></h3>
+    <input type="text" id="userInput" placeholder="Enter topic or context" />
+    <button onclick="generatePrompt()">Generate Prompt</button>
+    <div class="output-wrapper">
+      <textarea id="output" rows="6" readonly></textarea>
+      <i class="fas fa-copy copy-icon" title="Copy Prompt" onclick="copyPrompt()"></i>
+    </div>
+    <button onclick="openChatGPT()">Open in ChatGPT</button>
+  </div>
+</div>
+
+<script src="prompts.js"></script>
+<script>
+const avatarGrid = document.getElementById('avatarGrid');
+const popupOverlay = document.getElementById('popupOverlay');
+const popupTitle = document.getElementById('popupTitle');
+const popupImg = document.getElementById('popupImg');
+const output = document.getElementById('output');
+const userInput = document.getElementById('userInput');
+let selectedRole = '';
+
+// Generate avatars dynamically
+for (const role in prompts) {
+  const avatarDiv = document.createElement('div');
+  avatarDiv.classList.add('avatar');
+  avatarDiv.dataset.role = role;
+  avatarDiv.dataset.img = prompts[role].img; // Set image from prompts.js
+  avatarDiv.innerHTML = `<img src="${prompts[role].img}" alt="${role}">${role}`;
+  avatarGrid.appendChild(avatarDiv);
+
+  avatarDiv.addEventListener('click', () => {
+    selectedRole = role;
+    popupTitle.innerText = `Topic for ${role}`;
+    popupImg.src = prompts[role].img;
+    userInput.value = '';
+    output.value = '';
+    popupOverlay.classList.add('active');
+  });
+}
+
+function generatePrompt() {
+  const input = userInput.value;
+  if (prompts[selectedRole]) {
+    output.value = prompts[selectedRole].prompt.replace("{topic}", input);
+  }
+}
+
+function copyPrompt() {
+  output.select();
+  navigator.clipboard.writeText(output.value);
+  alert('Prompt copied to clipboard!');
+}
+
+function openChatGPT() {
+  const text = encodeURIComponent(output.value);
+  const chatUrl = `https://chat.openai.com/?prompt=${text}`;
+  window.open(chatUrl, '_blank');
+}
+
+popupOverlay.addEventListener('click', (e) => {
+  if(e.target === popupOverlay) {
+    popupOverlay.classList.remove('active');
+  }
+});
+</script>
+</body>
+</html>

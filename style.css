@@ -1,0 +1,201 @@
+/* style.css - Complete Responsive Mobile App Styling with Popup and Copy Icon */
+
+Hide scrollbar but allow scrolling
+::-webkit-scrollbar {
+  display: none;
+}
+
+* {
+  scrollbar-width: thin; /* Firefox */
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #121212;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+  padding-top: 20px;
+  box-sizing: border-box;
+}
+
+
+.container {
+  width: 360px;
+  max-width: 95%;
+  background: rgba(30,30,30,0.95);
+  border-radius: 25px;
+  padding: 20px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow-y: auto;
+  max-height: 90vh;
+}
+
+h1 {
+  font-size: 1.8rem;
+  margin-bottom: 5px;
+  text-align: center;
+}
+
+p {
+  font-size: 0.9rem;
+  color: #aaa;
+  text-align: center;
+}
+
+.avatar-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 10px;
+  width: 100%;
+  margin-top: 20px;
+}
+
+.avatar {
+  flex: 1 1 48%;
+  margin: 5px 0;
+  padding: 10px;
+  text-align: center;
+  border-radius: 15px;
+  backdrop-filter: blur(10px);
+  background: rgba(255,255,255,0.1);
+  cursor: pointer;
+  transition: 0.3s;
+  font-size: 0.9rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.avatar img {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 8px;
+  border: 2px solid rgba(255,255,255,0.3);
+}
+
+.avatar:hover {
+  transform: scale(1.05);
+  background: rgba(255,255,255,0.2);
+}
+
+/* Popup overlay */
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.7);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.popup-overlay.active {
+  display: flex;
+}
+
+.popup {
+  background: rgba(30,30,30,0.95);
+  padding: 20px;
+  border-radius: 20px;
+  width: 90%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  animation: popupAnim 0.3s ease;
+}
+
+@keyframes popupAnim {
+  0% { opacity: 0; transform: translateY(20px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+.popup img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin: 0 auto 10px auto;
+  display: block;
+  border: 2px solid rgba(255,255,255,0.3);
+}
+
+textarea, input {
+  width: 100%;
+  padding: 12px;
+  margin-top: 10px;
+  border-radius: 10px;
+  border: none;
+  outline: none;
+  background: rgba(255,255,255,0.1);
+  color: #fff;
+  font-size: 0.9rem;
+}
+
+button {
+  margin-top: 15px;
+  padding: 12px 0;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  background: linear-gradient(135deg, #00c3ff, #00ffa3);
+  color: #000;
+  font-weight: bold;
+  width: 100%;
+  transition: 0.3s;
+  font-size: 0.95rem;
+}
+
+button:hover {
+  transform: scale(1.02);
+  box-shadow: 0 4px 12px rgba(0,255,200,0.3);
+}
+
+/* Copy icon */
+.output-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.copy-icon {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  font-size: 1.3rem;
+  color: #00c3ff;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.copy-icon:hover {
+  color: #00ffa3;
+  transform: scale(1.2);
+}
+
+@media (max-width: 400px) {
+  .container {
+    width: 95%;
+    max-height: 95vh;
+    padding: 15px;
+  }
+
+  .avatar {
+    flex: 1 1 100%;
+    margin: 5px 0;
+  }
+}
